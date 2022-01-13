@@ -28,4 +28,4 @@ Linear Regression algorithm is used to predict the closing price of Netflix stoc
 ## Data Collection
 
 The dataset is sourced from Kaggle.com.
-Based on Yahoo Finance: Netflix historical price 12/16/2015 until 12/16/2019 daily price and volume. There are 7 columns; Date, open, high, low, close, volume, adj close (2001, 7) each of stock
+Based on Yahoo Finance: Netflix historical price 12/16/2015 until 12/16/2019 daily price and volume. There are 7 columns; Date, open, high, low, close, volume, adj close (2001, 7) each of stock.

@@ -8,7 +8,7 @@ Case Study: To design a stock prediction model for the closing price of Netflix.
 * Goal: To predict the closing price of Netflix.
 * Objective: To build a predictive model using Linear Regression algorithm.
 
-*Closing price: Last price to buy before the closing of business hour or After-Hour Trading (AHT).
+*Closing price: Last price to buy before the closing of business hour or After-Hour Trading (AHT).*
 
 
 ## Analytic Approach

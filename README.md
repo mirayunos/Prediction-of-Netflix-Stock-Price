@@ -93,6 +93,53 @@ sb.heatmap(corr,xticklabels=corr.columns, yticklabels=corr.columns,
  ```
  ![1](https://user-images.githubusercontent.com/93753467/149455943-b2d33f1f-29aa-4ebd-aa7f-568fdd2e7446.png)
 
+ Preparing the dataset to work with, using only the required columns.
  
+ ```
+nflx_df=df[["Date","High","Open","Low","Close"]]
+nflx_df.head(10)
+```
+
+Plotting the Data
+
+```
+plt.figure(figsize=(16,8))
+plt.title("Netflix Stocks Closing Price History 2015-2019")
+plt.plot(nflx_df["Date"],nflx_df["Close"])
+plt.xlabel("Date",fontsize=18)
+plt.ylabel("Close Price US($)",fontsize=18)
+plt.style.use("fivethirtyeight")
+plt.show()
+```
+![2](https://user-images.githubusercontent.com/93753467/149796035-5a898fb2-ab1f-4e1e-bcd2-99819ec6934e.png)
+
+```
+#Plot Open vs Close
+nflx_df[['Open','Close']].head(20).plot(kind='bar',figsize=(16,8))
+plt.grid(which='major', linestyle='-', linewidth='0.5', color='green')
+plt.grid(which='minor', linestyle=':', linewidth='0.5', color='black')
+plt.show()
+```
+![3](https://user-images.githubusercontent.com/93753467/149796363-3b871156-6b93-4c29-b00f-08d46fad5a73.png)
+
+```
+#Plot High vs Close
+nflx_df[['High','Close']].head(20).plot(kind='bar',figsize=(16,8))
+plt.grid(which='major', linestyle='-', linewidth='0.5', color='green')
+plt.grid(which='minor', linestyle=':', linewidth='0.5', color='black')
+plt.show()
+```
+![4](https://user-images.githubusercontent.com/93753467/149796410-9b6ba001-87e9-4c9c-9ebe-65656edf8c8a.png)
+
+```
+#Plot Low vs Close
+nflx_df[["Low","Close"]].head(20).plot(kind="bar",figsize=(16,8))
+plt.grid(which='major', linestyle='-', linewidth='0.5', color='green')
+plt.grid(which='minor', linestyle=':', linewidth='0.5', color='black')
+plt.show()
+```
+![5](https://user-images.githubusercontent.com/93753467/149796480-2fb237a6-ce86-49e1-afec-821375d30c39.png)
+
+
  
 

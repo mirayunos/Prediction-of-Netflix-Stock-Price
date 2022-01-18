@@ -27,9 +27,11 @@ Linear Regression algorithm is used to predict the closing price of Netflix stoc
 
 ## Data Collection
 
-The dataset is sourced from Kaggle.com. Dataset is downloaded and uploaded back to Jupyter Notebook. This dataset is based on Yahoo Finance: Netflix historical price 12/16/2015 until 12/16/2019 daily price and volume. There are 7 columns; Date, open, high, low, close, volume, adj close (2001, 7) each of stock.
+The dataset is sourced from Kaggle.com. Dataset is downloaded and uploaded back to Jupyter Notebook. This dataset is based on Yahoo Finance: Netflix historical price 16th December 2015 until 16th December 2019 daily price and volume. There are 7 columns; Date, open, high, low, close, volume, adj close (2001, 7) each of stock.
 
 ## Data Understanding and Preparation
+
+This dataset is already clean and does not require for data wrangling process.
 
 * Importing Packages
 
@@ -82,7 +84,6 @@ corr = df.corr()
 corr
 ```
 
-* Exploratory Data Analysis (EDA)
 
 Using heatmap for visualisation.
 
@@ -140,6 +141,101 @@ plt.show()
 ```
 ![5](https://user-images.githubusercontent.com/93753467/149796480-2fb237a6-ce86-49e1-afec-821375d30c39.png)
 
+```
+df['Date'] = pd.to_datetime(df['Date'])
+#df['Month'] = df['Date'].dt.month
+df.head()
+```
 
+To make the dataset easier to deal with, the date is converted into three separate columns: year, month and date.
+
+```
+nflx_df['Year']=df['Date'].dt.year
+nflx_df['Month']=df['Date'].dt.month
+nflx_df['Day']=df['Date'].dt.day
+```
+
+```
+nfx_df=nflx_df[['Day','Month','Year','High','Open','Low','Close']]
+nfx_df.head(10)
+```
+
+```
+#separate Independent and dependent variable
+X = nfx_df.iloc[:,nfx_df.columns !='Close']
+Y= nfx_df.iloc[:, 5]
+ ```
  
+ ```
+ print(X.shape) #output: (1007, 6)
+print(Y.shape) #output: (1007,)
+```
 
+(1007, 6)
+(1007,)
+
+
+The dataset is splitted into train and test, 75% for training and 25% for testing.
+
+```
+#Splitting the dataset into train and test
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test= train_test_split(X,Y,test_size=.25)
+```
+
+```
+print(x_train.shape) #output: (755, 6)
+print(x_test.shape) #output: (252, 6) 
+print(y_train.shape) #output: (755,)
+print(y_test.shape) #output: (252,)
+#y_test to be evaluated with y_pred for Diff models
+```
+
+(755, 6)
+(252, 6)
+(755,)
+(252,)
+
+```
+#Linear Regression Model Training and Testing
+
+lr_model=LinearRegression()
+lr_model.fit(x_train,y_train)
+```
+
+LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+
+```
+y_pred=lr_model.predict(x_test)
+```
+
+## Accuracy of the Model
+
+```
+#Linear Model Cross-Validation
+
+from sklearn import model_selection
+from sklearn.model_selection import KFold
+kfold = model_selection.KFold(n_splits=20, random_state=100)
+results_kfold = model_selection.cross_val_score(lr_model, x_test, y_test.astype('int'), cv=kfold)
+print("Accuracy: ", results_kfold.mean()*100)
+```
+
+Accuracy:  99.9989387349546
+
+It is noted that the accuracy is very high which can be regarded as overfitting. However this is due to the dataset being small, clean and has no missing values.
+
+```
+#Plot Actual vs Predicted Value
+
+plot_df=pd.DataFrame({'Actual':y_test,'Pred':y_pred})
+plot_df.head(20).plot(kind='bar',figsize=(10,4))
+plt.grid(which='major', linestyle='-', linewidth='0.5', color='green')
+plt.grid(which='minor', linestyle=':', linewidth='0.5', color='black')
+plt.show()
+```
+![6](https://user-images.githubusercontent.com/93753467/149910321-fe9a96d6-8ab8-4b35-826d-11f7979831ea.png)
+
+         
+  
